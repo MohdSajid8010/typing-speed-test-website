@@ -58,6 +58,7 @@ const AccountCircle = () => {
                         color: "green",
                     },
                 });
+                
                 handleClose()
             }).catch((err) => {
                 console.log(err);

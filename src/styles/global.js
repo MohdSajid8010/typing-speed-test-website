@@ -411,6 +411,10 @@ body {
     .words {
         font-size: 23px;
     }
+    .line-component {
+        // width: 100% !important;
+    
+    }
 }
 
 
