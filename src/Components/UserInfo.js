@@ -27,7 +27,8 @@ const UserInfo = ({ data }) => {
 
                 <div className='info'>
                     <div className='email'>{user.email} </div>
-                    <div className='joined-at'>{user.metadata.creationTime}</div>
+                    {console.log(new Date(user.metadata.creationTime).toDateString())}
+                    <div className='joined-at'>joined - {new Date(user.metadata.creationTime).toDateString()}</div>
                 </div>
             </div>
 

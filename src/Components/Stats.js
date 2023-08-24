@@ -128,7 +128,7 @@ const Stats = ({ wpm, accuracy, corretChar, inCorretChar, missedChar, extraChar,
                 </div>
                 <div>
                     <div className='title'>Accuracy:</div>
-                    <div className='sub-title'>{accuracy}</div>
+                    <div className='sub-title'>{isNaN(accuracy) ? accuracy : accuracy + " %"}</div>
                 </div>
                 <div>
                     <div className='title'>Characters:</div>

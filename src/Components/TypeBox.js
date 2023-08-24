@@ -22,6 +22,7 @@ const TypeBox = () => {
     const [extraChar, setExtraChar] = useState(0)
     const [corretWord, setCorectWord] = useState(0)
     const [graphData, setGraphData] = useState([])
+    const [NewTestTime, setNewTestTime] = useState(testTime)
 
 
 
@@ -65,7 +66,7 @@ const TypeBox = () => {
                     })
                     return corretChar;
                 })
-
+                setNewTestTime(testTime - latestCtDown + 1)
                 if (latestCtDown === 1) {
                     setTestEnd(true);
                     clearInterval(timerid);
@@ -108,9 +109,18 @@ const TypeBox = () => {
                 setMissedChar(missedChar + (allCurrChar.length - currCharIndex))
 
             }
-            wordSpanRef[currWordIndex + 1].current.children[0].className = "current"
-            setCurrWordIndex(currWordIndex + 1);
-            setCurrCharIndex(0);
+            if (wordSpanRef[currWordIndex + 1]) {
+
+                wordSpanRef[currWordIndex + 1].current.children[0].className = "current"
+                setCurrWordIndex(currWordIndex + 1);
+                setCurrCharIndex(0);
+            }
+            if (!wordSpanRef[currWordIndex + 1]) {//need to be end the test now
+                setTestEnd(true);
+                clearInterval(intervalId);
+
+            }
+
             return;
         }
 
@@ -185,7 +195,8 @@ const TypeBox = () => {
 
     function resetFun() {
         setCountDown(testTime)
-        testTime == 60 ? setWordArr(() => generate(60)) : setWordArr(() => generate(50));
+        testTime == 60 ? setWordArr(() => generate(70)) : setWordArr(() => generate(50));
+        // setWordArr(() => generate(50))
         setCurrWordIndex(0);
         setCurrCharIndex(0);
         setTestStart(false)
@@ -220,7 +231,7 @@ const TypeBox = () => {
     }
 
     function calculateWPM() {
-        return Math.round(((corretChar) / 5) / (testTime / 60));
+        return Math.round(((corretChar) / 5) / (NewTestTime / 60));
     }
 
     function calculateAccuracy() {
