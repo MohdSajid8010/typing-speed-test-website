@@ -1,9 +1,6 @@
 import React from 'react';
 import { GlobalStyle } from './styles/global';
 
-// import TypeBox from './Components/TypeBox';
-// import Footer from './Components/Footer';
-// import Header from './Components/Header';
 import { ThemeProvider } from 'styled-components';
 import { useThemeContext } from './context/ThemeContext';
 import { ToastContainer } from 'react-toastify';
@@ -25,12 +22,7 @@ function App() {
         <Route path='/user' element={<User />} />
 
       </Routes>
-      {/* <div className="canvas">
-        <Header />
-        <TypeBox />
-        <Footer />
 
-      </div> */}
     </ThemeProvider>
 
   );

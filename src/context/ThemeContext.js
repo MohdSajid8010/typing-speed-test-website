@@ -4,7 +4,7 @@ import { themeOptions } from '../utils/themeOptions';
 const ThemeContext = createContext();
 
 export const ThemeContextprovider = (props) => {
-    let themeDefault = JSON.parse(localStorage.getItem("theme")) || themeOptions[0].value;
+    let themeDefault = JSON.parse(localStorage.getItem("theme")) || themeOptions[5].value;
     const [theme, setTheme] = useState(themeDefault);//theme object set
 
     return <ThemeContext.Provider value={{ theme, setTheme }}>
@@ -13,4 +13,6 @@ export const ThemeContextprovider = (props) => {
 }
 
 
-export const useThemeContext = () => useContext(ThemeContext);
+export const useThemeContext = () => {
+  return  useContext(ThemeContext);
+};

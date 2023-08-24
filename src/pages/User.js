@@ -6,37 +6,35 @@ import { CircularProgress } from '@mui/material';
 import Graph from '../Components/Graph';
 import UserDataTable from '../Components/UserDataTable';
 import UserInfo from '../Components/UserInfo';
+import { useThemeContext } from '../context/ThemeContext';
 
 const User = () => {
     const [data, setData] = useState("");
     const [user, loading] = useAuthState(auth)
     const [graphData, setGraphData] = useState([]);
     const [dataLoading, setDataLoading] = useState(true);
-
+    let { theme } = useThemeContext()
     let navigate = useNavigate();
     function getUserData() {
         const { uid } = auth.currentUser;
-        console.log("uid=", uid)
+        // console.log("uid=", uid)
         const resultsRef = db.collection('Results');
 
         resultsRef.where('userId', '==', uid)
             .orderBy('timeStamp', 'desc')
             .get()//where query
             .then((snapshot) => {
-                console.log(snapshot, snapshot.docs);
-                // snapshot.forEach((doc)=>{
-                //     console.log(doc)
-                // })
-                // snapshot.docs.map((doc) => {
-                //     console.log(doc.data());
-                // })
+                // console.log(snapshot, snapshot.docs);
+
                 let tempData = []
                 let tempGraphData = []
 
                 snapshot.docs.map((doc) => {
-                    console.log(doc.data());
+                    // console.log("data=", doc.data());
                     tempData.push({ ...doc.data() })
-                    tempGraphData.push([doc.data().timeStamp.toDate().toLocaleString().split(',')[0], doc.data().wpm])
+                    tempGraphData.push([doc.data().timeStamp.toDate().toLocaleString().split(',')[0],
+                    doc.data().wpm,
+                    doc.data().accuracy])
 
 
                 })
@@ -49,6 +47,9 @@ const User = () => {
 
             })
     }
+
+
+
     useEffect(() => {
         if (!loading && !auth) {
 
@@ -58,6 +59,7 @@ const User = () => {
         if (!loading) {
 
             getUserData();
+
         }
 
 
@@ -65,15 +67,16 @@ const User = () => {
 
 
     if (loading || dataLoading) {
-        return <div className='parentOfloader'><CircularProgress size={100} /></div>
+        return <div className='parentOfloader'><CircularProgress size={100} style={{ color: theme.textColor }} /></div>
     }
 
     return (
 
 
         <div className='canvas'>
-            <UserInfo totalTestTaken={data.length} />
-            <div className='user-info-graph'><Graph newGraphData={graphData} /></div>
+
+            <UserInfo data={data} />
+            <div className='user-info-graph'><Graph newGraphData={graphData} vsDateOrTime='Date' /></div>
             <UserDataTable data={data} />
         </div>
     )

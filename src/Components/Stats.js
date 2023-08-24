@@ -5,10 +5,10 @@ import { toast } from 'react-toastify';
 
 const Stats = ({ wpm, accuracy, corretChar, inCorretChar, missedChar, extraChar, graphData }) => {
 
-    console.log(wpm, accuracy, corretChar,
-        inCorretChar,
-        missedChar,
-        extraChar,
+    console.log(wpm, accuracy, "corretChar", corretChar,
+        "inCorretChar", inCorretChar,
+        "missedChar", missedChar,
+        "extraChar", extraChar,
         graphData
     )
     let timeSet = new Set();
@@ -30,7 +30,10 @@ const Stats = ({ wpm, accuracy, corretChar, inCorretChar, missedChar, extraChar,
                 pauseOnHover: true,
                 draggable: true,
                 progress: undefined,
-                theme: "dark",
+                theme: "light",
+                style: {
+                    color: "red",
+                },
             });
             return;
         }
@@ -42,7 +45,6 @@ const Stats = ({ wpm, accuracy, corretChar, inCorretChar, missedChar, extraChar,
             wpm: wpm,
             accuracy: accuracy,
             timeStamp: new Date(),
-            // characters: `${corretChar / inCorretChar / missedChar / extraChar}`,
             corretChar: corretChar,
             inCorretChar: inCorretChar,
             missedChar: missedChar,
@@ -58,7 +60,10 @@ const Stats = ({ wpm, accuracy, corretChar, inCorretChar, missedChar, extraChar,
                 pauseOnHover: true,
                 draggable: true,
                 progress: undefined,
-                theme: "dark",
+                theme: "light",
+                style: {
+                    color: "green",
+                },
             });
         }).catch((err) => {
             console.log(err);
@@ -70,7 +75,10 @@ const Stats = ({ wpm, accuracy, corretChar, inCorretChar, missedChar, extraChar,
                 pauseOnHover: true,
                 draggable: true,
                 progress: undefined,
-                theme: "dark",
+                theme: "light",
+                style: {
+                    color: "red",
+                },
             });
         })
 
@@ -80,6 +88,22 @@ const Stats = ({ wpm, accuracy, corretChar, inCorretChar, missedChar, extraChar,
         if (auth.currentUser) {
             pushDataToDB();
         } else {
+            if (isNaN(accuracy)) {
+                toast.error("Invalid Test!", {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    style: {
+                        color: "red",
+                    },
+                });
+                return;
+            }
             toast.warn("Login to save results!", {
                 position: "top-right",
                 autoClose: 5000,
@@ -88,25 +112,31 @@ const Stats = ({ wpm, accuracy, corretChar, inCorretChar, missedChar, extraChar,
                 pauseOnHover: true,
                 draggable: true,
                 progress: undefined,
-                theme: "dark",
+                theme: "light",
+                style: {
+                    color: "black",
+                },
             });
         }
     }, [])
     return (
         <div className='stats-box'>
             <div className='left'>
-                <div className='title'>WPM:</div>
-                <div className='sub-title'>{wpm}</div>
-                <div className='title'>Accuracy:</div>
-                <div className='sub-title'>{accuracy}</div>
-                <div className='title'>Characters:</div>
-                <div className='sub-title'>
-                    {/* corretChar:{corretChar}/inCorretChar:{inCorretChar}/missedChar:{missedChar}/extraChar:{extraChar} */}
-                    {corretChar}/{inCorretChar}/{missedChar}/{extraChar}
+                <div>
+                    <div className='title'>WPM:</div>
+                    <div className='sub-title'>{wpm}</div>
+                </div>
+                <div>
+                    <div className='title'>Accuracy:</div>
+                    <div className='sub-title'>{accuracy}</div>
+                </div>
+                <div>
+                    <div className='title'>Characters:</div>
+                    <div className='sub-title'>{corretChar}/{inCorretChar}/{missedChar}/{extraChar} </div>
                 </div>
             </div>
             <div className='right'>
-                <Graph newGraphData={newGraphData} />
+                <Graph newGraphData={newGraphData} vsDateOrTime='Time(sec)' />
             </div>
         </div>
     )

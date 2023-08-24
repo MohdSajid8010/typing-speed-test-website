@@ -1,11 +1,8 @@
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import React, { useState } from 'react'
-import { useThemeContext } from '../context/ThemeContext';
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import React from 'react'
 
 const UserDataTable = ({ data }) => {
-    console.log(data);
-    let { theme } = useThemeContext()
-    const cellStyle = { color: theme.textColor, textAlign: 'center' }
+    // console.log(data);
 
 
 
@@ -16,10 +13,10 @@ const UserDataTable = ({ data }) => {
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell style={cellStyle}>wpm</TableCell>
-                            <TableCell style={cellStyle}>accuracy</TableCell>
-                            <TableCell style={cellStyle}>character</TableCell>
-                            <TableCell style={cellStyle}>Date</TableCell>
+                            <TableCell className='tableCell' >wpm</TableCell>
+                            <TableCell className='tableCell'>accuracy</TableCell>
+                            <TableCell className='tableCell'>character</TableCell>
+                            <TableCell className='tableCell'>Date</TableCell>
 
 
                         </TableRow>
@@ -28,14 +25,14 @@ const UserDataTable = ({ data }) => {
                     <TableBody>
                         {
                             data.length > 0 && (
-                                data.map((obj) => {
+                                data.map((obj, i) => {
                                     return (
-                                        <TableRow>
-                                            <TableCell style={cellStyle}>{obj.wpm}</TableCell>
-                                            <TableCell style={cellStyle}>{obj.accuracy}</TableCell>
-                                            <TableCell style={cellStyle}>{obj.corretChar}/{obj.inCorretChar}/{obj.extraChar}/{obj.missedChar}</TableCell>
+                                        <TableRow key={i}>
+                                            <TableCell className='tableCell'>{obj.wpm}</TableCell>
+                                            <TableCell className='tableCell'>{obj.accuracy}</TableCell>
+                                            <TableCell className='tableCell'>{obj.corretChar}/{obj.inCorretChar}/{obj.extraChar}/{obj.missedChar}</TableCell>
 
-                                            <TableCell style={cellStyle}>{obj.timeStamp.toDate().toLocaleDateString()} {obj.timeStamp.toDate().toLocaleTimeString()}</TableCell>
+                                            <TableCell className='tableCell'>{obj.timeStamp.toDate().toLocaleDateString()} {obj.timeStamp.toDate().toLocaleTimeString()}</TableCell>
 
                                             {/* {console.log(obj.timeStamp.toDate().toLocaleString())} */}
                                         </TableRow>

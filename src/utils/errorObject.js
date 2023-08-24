@@ -1,6 +1,4 @@
 
-
-
 const errorObject = {
     'auth/user-not-found': 'Please enter valid email or password',
     'auth/invalid-email': 'The email address is badly formatted',

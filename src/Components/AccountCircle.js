@@ -53,7 +53,10 @@ const AccountCircle = () => {
                     pauseOnHover: true,
                     draggable: true,
                     progress: undefined,
-                    theme: "dark",
+                    theme: "light",
+                    style: {
+                        color: "green",
+                    },
                 });
                 handleClose()
             }).catch((err) => {
@@ -67,7 +70,10 @@ const AccountCircle = () => {
                     pauseOnHover: true,
                     draggable: true,
                     progress: undefined,
-                    theme: "dark",
+                    theme: "light",
+                    style: {
+                        color: "red",
+                    },
                 });
 
             })
@@ -109,9 +115,9 @@ const AccountCircle = () => {
             });
     };
     return (
-        <div>
-            <AccountCircleIcon onClick={handleOpen} />
-            {user && <LogoutIcon onClick={handleLogout} />}
+        <div >
+            <AccountCircleIcon onClick={handleOpen} style={{ marginLeft: '10px', cursor: 'pointer' }} className='icons'/>
+            {user && <LogoutIcon onClick={handleLogout} style={{ marginLeft: '10px', cursor: 'pointer' }} className='icons'/>}
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -119,24 +125,32 @@ const AccountCircle = () => {
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
+                    // background: theme.background,
+
+
                 }}
             >
-                <div style={{ width: "400px" }}>
+                <div style={{ width: "400px", border: `2px solid ${theme.textColor}`, outline: 'none' }}>
 
-                    <AppBar position='static' style={{ background: "transparent" }}>
+                    <AppBar position='static' style={{ background: `${theme.background}` }}>
                         <Tabs variant='fullWidth'
                             value={value}
-                            onChange={handleValueChange}>
+                            onChange={handleValueChange}
+                        // textColor={theme.textColor}
+                        // indicatorColor={theme.textColor}
+                        >
+
                             <Tab label="login" style={{ color: theme.textColor }}></Tab>
                             <Tab label="signup" style={{ color: theme.textColor }}></Tab>
                         </Tabs>
                     </AppBar>
 
-                    {value === 0 && (<LoginForm handleClose={handleClose}/>)}
-                    {value === 1 && (<SignupForm handleClose={handleClose}/>)}
-                    <Box p={3} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: '20px', }}>
+                    {value === 0 && (<LoginForm handleClose={handleClose} />)}
+                    {value === 1 && (<SignupForm handleClose={handleClose} />)}
+                    <Box p={3} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: '20px', background: `${theme.background}` }}>
                         <span>OR</span>
-                        <GoogleButton style={{ width: '100%' }}
+                        <GoogleButton  // type="light" //  disabled  // label='Be Cool'
+                            style={{ width: '100%', }}
                             onClick={handleGoogleSignIn} />
                     </Box>
                 </div>
@@ -150,68 +164,3 @@ export default AccountCircle
 
 
 
-
-/*
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { AppBar, Modal, Tab, Tabs } from "@mui/material";
-// import Login from "./Login";
-// import { GoogleButton } from "react-google-button";
-// import Signup from "./Signup";
-import { useState } from "react";
-// import { UseThemes } from "./GlobalContextFolder/MyThemeContext";
-
-const AccountCircle = () => {
-    const [isOpen, setOpen] = useState(false);
-    const [value, setvalue] = useState(0);
-    //   const { theme } = UseThemes();
-    //   console.log(theme);
-
-    const HandleModal = () => {
-        setOpen(true);
-    };
-
-    const HandleClose = () => {
-        setOpen(false);
-    };
-    const handleChangeVal = (event, v) => {
-        setvalue(v);
-    };
-
-    return (
-        <div>
-            <AccountCircleIcon onClick={HandleModal} />
-            <Modal
-                open={isOpen}
-                onClose={HandleClose}
-                style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                }}
-            >
-                { <div style={{ width: "400px" }}>
-          <AppBar position="static" style={{ background: "blue" }}>
-            <Tabs variant="fullWidth" value={value} onChange={handleChangeVal}>
-              <Tab label="Signup" style={{ color: theme.color }}></Tab>
-              <Tab label="Login" style={{ color: theme.color }}></Tab>
-            </Tabs>
-          </AppBar>
-
-          {value == 0 && <Signup />}
-          {value == 1 && <Login />}
-        </div> }
-
-                { <GoogleButton
-          style={{
-            width: "100%",
-            marginTop: "8px",
-          }}
-        /> }
-
-//             </Modal>
-//         </div>
-//     );
-// };
-// export default AccountCircle;
-
-*/

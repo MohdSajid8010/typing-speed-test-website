@@ -4,10 +4,10 @@ import AccountCircle from './AccountCircle'
 const Header = () => {
   return (
     <div className='header'>
-        <div className='logo'>Logo</div>
-        <div className='user-icon'>
-          <AccountCircle/>
-        </div>
+      <div className='logo'>TypeMomentum</div>
+      <div className='user-icon'>
+        <AccountCircle />
+      </div>
     </div>
   )
 }

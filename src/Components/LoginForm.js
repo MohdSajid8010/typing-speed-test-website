@@ -5,7 +5,7 @@ import { auth } from '../FirebaseConfig'
 import { toast } from 'react-toastify';
 import errorObject from '../utils/errorObject';
 
-const LoginForm = ({handleClose}) => {
+const LoginForm = ({ handleClose }) => {
     const [loginData, setLoginData] = useState({ email: "", password: "" })
     const { theme } = useThemeContext()
 
@@ -26,7 +26,7 @@ const LoginForm = ({handleClose}) => {
             return;
         }
 
-        console.log(loginData)
+        // console.log(loginData)
         auth.signInWithEmailAndPassword(loginData.email.trim(), loginData.password.trim())
             .then((res) => {
                 console.log(res)
@@ -39,7 +39,10 @@ const LoginForm = ({handleClose}) => {
                     pauseOnHover: true,
                     draggable: true,
                     progress: undefined,
-                    theme: "dark",
+                    theme: "light",
+                    style: {
+                        color: "green",
+                    },
                 });
                 handleClose()
 
@@ -55,7 +58,10 @@ const LoginForm = ({handleClose}) => {
                     pauseOnHover: true,
                     draggable: true,
                     progress: undefined,
-                    theme: "dark",
+                    theme: "light",
+                    style: {
+                        color: "red",
+                    },
                 });
             })
 
@@ -67,6 +73,7 @@ const LoginForm = ({handleClose}) => {
                 display: "flex",
                 flexDirection: "column",
                 gap: "20px",
+                background: theme.background
             }}>
             <TextField
                 variant="outlined"

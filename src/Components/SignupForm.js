@@ -1,7 +1,4 @@
 
-
-
-
 import { Box, Button, TextField } from '@mui/material'
 import React, { useState } from 'react'
 import { useThemeContext } from '../context/ThemeContext';
@@ -9,7 +6,7 @@ import { auth } from '../FirebaseConfig';
 import { toast } from 'react-toastify';
 import errorObject from '../utils/errorObject';
 
-const SignupForm = ({handleClose}) => {
+const SignupForm = ({ handleClose }) => {
     const [signupData, setSignupData] = useState({ email: "", pass: "", cpass: "" })
     const { theme } = useThemeContext()
     function handleSignup() {
@@ -55,7 +52,10 @@ const SignupForm = ({handleClose}) => {
                     pauseOnHover: true,
                     draggable: true,
                     progress: undefined,
-                    theme: "dark",
+                    theme: "light",
+                    style: {
+                        color: "green",
+                    },
                 });
                 localStorage.setItem(`${signupData.email}`, JSON.stringify(signupData.pass))
                 handleClose()
@@ -70,9 +70,12 @@ const SignupForm = ({handleClose}) => {
                     pauseOnHover: true,
                     draggable: true,
                     progress: undefined,
-                    theme: "dark",
+                    theme: "light",
+                    style: {
+                        color: "red",
+                    },
                 });
-                
+
             })
 
     }
@@ -83,17 +86,19 @@ const SignupForm = ({handleClose}) => {
                 display: "flex",
                 flexDirection: "column",
                 gap: "20px",
+                background: `${theme.background}`
             }}>
             <TextField
-                variant="outlined"
-                label="Enter Email"
                 type='email'
+                label="Enter Email"
+                variant="outlined"
                 onChange={(e) => setSignupData({ ...signupData, email: e.target.value })}
                 InputLabelProps={{
-                    style: { color: theme.textColor }
+                    style: { color: theme.textColor, }
                 }}
                 inputProps={{
-                    style: { color: theme.textColor }
+                    style: { color: theme.textColor, }
+
                 }}
             />
             <TextField
