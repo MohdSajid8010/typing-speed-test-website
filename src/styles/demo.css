@@ -362,6 +362,10 @@ body {
         flex-direction: column;
     }
 }
-.icons{
+
+.icons {
+    margin-left: 10px;
+    cursor: pointer;
     font-size: 20px;
+    min-height: 300px;
 }

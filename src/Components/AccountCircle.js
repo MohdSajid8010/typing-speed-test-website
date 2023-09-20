@@ -5,7 +5,7 @@ import LoginForm from './LoginForm';
 import SignupForm from './SignupForm';
 import { useThemeContext } from '../context/ThemeContext';
 import GoogleButton from 'react-google-button';
-import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
+import { signInWithPopup, GoogleAuthProvider, signOut } from 'firebase/auth'
 import { auth } from '../FirebaseConfig';
 import { toast } from 'react-toastify';
 import errorObject from '../utils/errorObject';
@@ -38,12 +38,13 @@ const AccountCircle = () => {
         console.log(e, v)
         setvalue(v)
     }
+    // Create an instance of the Google provider object:
     const googleProvider = new GoogleAuthProvider();
 
     function handleGoogleSignIn() {
         signInWithPopup(auth, googleProvider)
             .then((res) => {
-                console.log(res);
+                console.log(res.user);
 
                 toast.success("succesfully! google sign in", {
                     position: "top-right",
@@ -58,7 +59,7 @@ const AccountCircle = () => {
                         color: "green",
                     },
                 });
-                
+
                 handleClose()
             }).catch((err) => {
                 console.log(err);
@@ -82,9 +83,9 @@ const AccountCircle = () => {
 
 
     function handleLogout() {
-        auth.signOut()
-            .then((res) => {
-                console.log(res)
+        signOut(auth)
+            .then(() => {
+                console.log("logout succeccfully!")
                 toast.success("logged out successfully!", {
                     position: "top-right",
                     autoClose: 4000,
@@ -99,8 +100,8 @@ const AccountCircle = () => {
                     },
                 });
             })
-            .catch((error) => {
-                toast.error("Not able to  Logged out !", {
+            .catch((err) => {
+                toast.error(errorObject[err.code] || "Not able to Logged out !", {
                     position: "top-right",
                     autoClose: 4000,
                     hideProgressBar: false,
@@ -117,8 +118,8 @@ const AccountCircle = () => {
     };
     return (
         <div >
-            <AccountCircleIcon onClick={handleOpen} style={{ marginLeft: '10px', cursor: 'pointer' }} className='icons'/>
-            {user && <LogoutIcon onClick={handleLogout} style={{ marginLeft: '10px', cursor: 'pointer' }} className='icons'/>}
+            <AccountCircleIcon onClick={handleOpen} style={{ marginLeft: '10px' }} className='icons' />
+            {user && <LogoutIcon onClick={handleLogout} style={{ marginLeft: '10px' }} className='icons' />}
             <Modal
                 open={open}
                 onClose={handleClose}

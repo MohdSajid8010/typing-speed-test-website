@@ -5,11 +5,13 @@ import { useThemeContext } from '../context/ThemeContext';
 import { auth } from '../FirebaseConfig';
 import { toast } from 'react-toastify';
 import errorObject from '../utils/errorObject';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 const SignupForm = ({ handleClose }) => {
     const [signupData, setSignupData] = useState({ email: "", pass: "", cpass: "" })
     const { theme } = useThemeContext()
     function handleSignup() {
+        //chech email ,pass and cpass should not be empty
         if (!signupData.email.trim() || !signupData.pass.trim() || !signupData.cpass.trim()) {
             // alert("All field is mandatory!");
             toast.warn("All field is mandatory to sign up!", {
@@ -25,6 +27,7 @@ const SignupForm = ({ handleClose }) => {
             return;
         }
 
+        //chech pass and cpass 
         if (signupData.pass.trim() !== signupData.cpass.trim()) {
             // alert("Password not math")
             toast.warn("Password not match!", {
@@ -40,10 +43,12 @@ const SignupForm = ({ handleClose }) => {
             return
         }
         console.log(signupData)
-        auth.createUserWithEmailAndPassword(signupData.email.trim(), signupData.pass.trim())
-            .then((res) => {
-                console.log(res)
-                // alert("user created!")
+
+
+
+        createUserWithEmailAndPassword(auth, signupData.email.trim(), signupData.pass.trim())
+            .then((userCredential) => {
+                console.log(userCredential.user)
                 toast.success("user created succesfully!", {
                     position: "top-right",
                     autoClose: 5000,
@@ -60,8 +65,7 @@ const SignupForm = ({ handleClose }) => {
                 localStorage.setItem(`${signupData.email}`, JSON.stringify(signupData.pass))
                 handleClose()
             }).catch((err) => {
-                console.log(err, err.code, "somethig went wrong1")
-                // alert("somethig went wrong1")
+                console.log(err, err.code, err.message, "somethig went wrong1")
                 toast.error(errorObject[err.code] || 'some err occured in sign up', {
                     position: "top-right",
                     autoClose: 5000,
@@ -132,7 +136,9 @@ const SignupForm = ({ handleClose }) => {
             <Button
                 variant='contained'
                 size='large' onClick={handleSignup}
-                style={{ background: theme.textColor, color: theme.background }} >Signup</Button>
+                style={{ background: theme.textColor, color: theme.background }}
+            >Signup</Button>
+
         </Box>
     )
 }

@@ -4,6 +4,7 @@ import { useThemeContext } from '../context/ThemeContext'
 import { auth } from '../FirebaseConfig'
 import { toast } from 'react-toastify';
 import errorObject from '../utils/errorObject';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 const LoginForm = ({ handleClose }) => {
     const [loginData, setLoginData] = useState({ email: "", password: "" })
@@ -11,6 +12,7 @@ const LoginForm = ({ handleClose }) => {
 
 
     function handleLogin() {
+        //check empty password and email
         if (!loginData.email.trim() || !loginData.password.trim()) {
             // alert("All field is mandatory to login!");
             toast.warn("All field is mandatory to login!", {
@@ -26,46 +28,46 @@ const LoginForm = ({ handleClose }) => {
             return;
         }
 
-        // console.log(loginData)
-        auth.signInWithEmailAndPassword(loginData.email.trim(), loginData.password.trim())
-            .then((res) => {
-                console.log(res)
-                // alert("user login succesfully!")
-                toast.success("user login succesfully!", {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                    style: {
-                        color: "green",
-                    },
-                });
-                handleClose()
 
-            }).catch((err) => {
-                console.log(err, err.code, "somethig went wrong1")
-                // alert("invalid creadential!")
+        signInWithEmailAndPassword(auth,loginData.email.trim(), loginData.password.trim())
+        .then((userCredential) => {
+            console.log(userCredential.user)
 
-                toast.error(errorObject[err.code] || 'some err occured!', {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                    style: {
-                        color: "red",
-                    },
-                });
-            })
+            toast.success("user login succesfully!", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                style: {
+                    color: "green",
+                },
+            });
+            handleClose()
+
+        }).catch((err) => {
+            console.log(err, err.code,err.message, "somethig went wrong1")
+
+            toast.error(errorObject[err.code] || 'some err occured!', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                style: {
+                    color: "red",
+                },
+            });
+        })
 
     }
+
     return (
         <Box
             p={3} style={{

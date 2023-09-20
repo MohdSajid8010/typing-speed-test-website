@@ -1,7 +1,7 @@
-import firebase from "firebase/compat/app";
-import 'firebase/compat/auth';
-import 'firebase/compat/firestore'
-
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
 
 const firebaseConfig = {
@@ -18,13 +18,13 @@ const firebaseConfig = {
 
 // console.log(process.env.REACT_APP_APIKEY);
 
-const firebaseApp = firebase.initializeApp(firebaseConfig);
 
-const auth = firebase.auth();
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
 
-const db = firebaseApp.firestore();
-
-export { auth, db };
+// Initialize Firebase Authentication and get a reference to the service
+export const auth = getAuth(app);//auth is instanse of app
+export const db = getFirestore(app)
 
 
 

@@ -34,6 +34,7 @@ const TypeBox = () => {
         // return new Array(wordsArr.length).fill(0).map(i => createRef(null))
 
     }, [wordsArr])
+
     useEffect(() => {
         inpFocus();
         // console.log("inside useEffect")
@@ -101,7 +102,7 @@ const TypeBox = () => {
             }
             if (allCurrChar.length <= currCharIndex) {//==
                 // remove cursor from last place
-                allCurrChar[currCharIndex - 1].classList.remove("current-right")//right cursor
+                allCurrChar[currCharIndex - 1].classList.remove("current-right")//remove only current-right class, right cursor
 
             } else {
                 // remove cursor from in between of word
@@ -187,7 +188,7 @@ const TypeBox = () => {
             //if not last indexing
             allCurrChar[currCharIndex + 1].className = "current"
         }
-        setCurrCharIndex(currCharIndex + 1)
+        setCurrCharIndex(currCharIndex + 1);
         // console.log(currCharIndex)
 
 
@@ -254,10 +255,10 @@ const TypeBox = () => {
                         {
                             wordsArr.map((words, i) => {
                                 return (
-                                    <span className='word' ref={wordSpanRef[i]}>
+                                    <span className='word' ref={wordSpanRef[i]} key={`word+${i}`}>
                                         {
-                                            words.split("").map((char) => {
-                                                return <span className=''>{char}</span>
+                                            words.split("").map((char, j) => {
+                                                return <span className='' key={`word${i}char${j}`}>{char}</span>
                                             })
                                         }
                                     </span>

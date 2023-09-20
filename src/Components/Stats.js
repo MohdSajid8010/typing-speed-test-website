@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import Graph from './Graph'
 import { auth, db } from '../FirebaseConfig';
 import { toast } from 'react-toastify';
+import { addDoc, collection } from 'firebase/firestore';
 
 const Stats = ({ wpm, accuracy, corretChar, inCorretChar, missedChar, extraChar, graphData }) => {
 
@@ -19,29 +20,12 @@ const Stats = ({ wpm, accuracy, corretChar, inCorretChar, missedChar, extraChar,
         }
     })
 
+
+
     function pushDataToDB() {
-
-        if (isNaN(accuracy)) {
-            toast.error("Invalid Test!", {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                style: {
-                    color: "red",
-                },
-            });
-            return;
-        }
-        let resultsRef = db.collection('Results');
-
         const { uid } = auth.currentUser;
-        console.log(auth, resultsRef)
-        resultsRef.add({
+
+        addDoc(collection(db, "Results"), {
             wpm: wpm,
             accuracy: accuracy,
             timeStamp: new Date(),
@@ -52,6 +36,7 @@ const Stats = ({ wpm, accuracy, corretChar, inCorretChar, missedChar, extraChar,
             userId: uid,
         }).then((res) => {
             console.log(res);
+            console.log("Document written with ID: ", res.id);
             toast.success("user data saved succesfully!", {
                 position: "top-right",
                 autoClose: 5000,
@@ -66,7 +51,7 @@ const Stats = ({ wpm, accuracy, corretChar, inCorretChar, missedChar, extraChar,
                 },
             });
         }).catch((err) => {
-            console.log(err);
+            console.log("Error adding document: ", err);
             toast.error("data not saved!", {
                 position: "top-right",
                 autoClose: 5000,
@@ -84,26 +69,23 @@ const Stats = ({ wpm, accuracy, corretChar, inCorretChar, missedChar, extraChar,
 
     }
 
+
     useEffect(() => {
-        if (auth.currentUser) {
-            pushDataToDB();
-        } else {
-            if (isNaN(accuracy)) {
-                toast.error("Invalid Test!", {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                    style: {
-                        color: "red",
-                    },
-                });
-                return;
-            }
+        if (isNaN(accuracy)) {
+            toast.error("Invalid Test!", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                style: {
+                    color: "red",
+                },
+            });
+        } else if (!auth.currentUser) {
             toast.warn("Login to save results!", {
                 position: "top-right",
                 autoClose: 5000,
@@ -117,6 +99,8 @@ const Stats = ({ wpm, accuracy, corretChar, inCorretChar, missedChar, extraChar,
                     color: "black",
                 },
             });
+        } else if (auth.currentUser) {
+            pushDataToDB();
         }
     }, [])
     return (

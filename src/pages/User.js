@@ -7,6 +7,7 @@ import Graph from '../Components/Graph';
 import UserDataTable from '../Components/UserDataTable';
 import UserInfo from '../Components/UserInfo';
 import { useThemeContext } from '../context/ThemeContext';
+import { collection, getDocs, orderBy, query, where } from 'firebase/firestore';
 
 const User = () => {
     const [data, setData] = useState("");
@@ -15,39 +16,39 @@ const User = () => {
     const [dataLoading, setDataLoading] = useState(true);
     let { theme } = useThemeContext()
     let navigate = useNavigate();
+
+    //read user data from firestore 
+
     function getUserData() {
+
         const { uid } = auth.currentUser;
-        // console.log("uid=", uid)
-        const resultsRef = db.collection('Results');
+        console.log("uid=", uid)
 
-        resultsRef.where('userId', '==', uid)
-            .orderBy('timeStamp', 'desc')
-            .get()//where query
-            .then((snapshot) => {
-                // console.log(snapshot, snapshot.docs);
+        const q = query(collection(db, "Results"), where("userId", "==", uid), orderBy("timeStamp", "desc"));
 
-                let tempData = []
-                let tempGraphData = []
+        getDocs(q).then((snapshot) => {
+            console.log(snapshot, snapshot.docs);
 
-                snapshot.docs.map((doc) => {
-                    // console.log("data=", doc.data());
-                    tempData.push({ ...doc.data() })
-                    tempGraphData.push([doc.data().timeStamp.toDate().toLocaleString().split(',')[0],
-                    doc.data().wpm,
-                    doc.data().accuracy])
+            let tempData = []
+            let tempGraphData = []
 
+            snapshot.docs.forEach((doc) => {
+                tempData.push({ ...doc.data() })
+                tempGraphData.push([doc.data().timeStamp.toDate().toLocaleString().split(',')[0],
+                doc.data().wpm,
+                doc.data().accuracy])
 
-                })
-                setData(tempData);//set data arr
-                setGraphData(tempGraphData);
-                setDataLoading(false)
-
-            }).catch((err) => {
-                console.log(err);
 
             })
-    }
+            setData(tempData);
+            setGraphData(tempGraphData);
+            setDataLoading(false)
 
+        }).catch((err) => {
+            console.log(err);
+
+        })
+    }
 
 
     useEffect(() => {

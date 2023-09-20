@@ -15,7 +15,6 @@ export const GlobalStyle = createGlobalStyle`
 body {
     background-color:${(props) => props.theme.background};
     color:${(props) => props.theme.textColor};
-
     transition: all 0.5s linear;
 
 }
@@ -25,6 +24,7 @@ body {
     font-size: 500;
 }
 .icons{
+    cursor: pointer;
     font-size: 30px;
 }
 
@@ -413,7 +413,7 @@ body {
     }
     .line-component {
         // width: 100% !important;
-    
+        min-height: 300px;
     }
 }
 

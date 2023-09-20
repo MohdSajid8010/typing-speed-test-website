@@ -5,6 +5,7 @@ import { useThemeContext } from '../context/ThemeContext';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import { NavLink } from 'react-router-dom';
+
 const Footer = () => {
     const { theme, setTheme } = useThemeContext()
 
