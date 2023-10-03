@@ -1,26 +1,8 @@
-import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    LineElement,
-    PointElement,
-    Title,
-    Tooltip,
-    Legend,
-} from "chart.js";
+import { Chart } from 'chart.js/auto';
 import { Line } from "react-chartjs-2";
 import { useThemeContext } from '../context/ThemeContext'
 
 
-ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    LineElement,
-    PointElement,
-    Title,
-    Tooltip,
-    Legend
-);
 
 const Graph = ({ newGraphData, vsDateOrTime }) => {
     // console.log(newGraphData)
@@ -33,30 +15,36 @@ const Graph = ({ newGraphData, vsDateOrTime }) => {
                     labels: vsDateOrTime === 'Time(sec)' ? newGraphData.map((arr) => arr[0]) : newGraphData.map((arr) => arr[0]).reverse(),//time/date
                     datasets: [
                         {
-                            data: newGraphData.map((arr) => arr[1]),//wpm
-                            label: `Word Per Minutes vs ${vsDateOrTime}`,
+                            data: newGraphData.map((arr) => arr[1]).reverse(),//wpm
+                            label: `Word Per Minute vs ${vsDateOrTime}`,
                             borderColor: `${theme.typeBoxTextColor}`,
 
                         },
-                        // newGraphData[0].length === 3 ? ({
-                        //     label: `date vs Accuracy`,
-                        //     data: newGraphData.map((arr) => arr[2]),//Accuracy
-                        //     borderColor: 'red',
-                        //     font: {
-                        //         size: 20
-                        //     }
-                        // }) : ({ label: `` })
+
 
                     ],
                 }}
                 options={{
+                    plugins: {
+
+                        legend: {
+                            display: true,
+                            position: "top", //   'top', 'bottom', 'left', 'right'
+
+                            labels: {
+                                font: { size: 25, },
+                                color: theme.textColor,
+                            },
+                        },
+
+                    },
                     animations: {
                         tension: {
                             duration: 1000,
                             easing: 'linear',
                             from: 1,
                             to: 0,
-                            loop: true
+                            loop: false,
                         }
                     },
                     scales: {

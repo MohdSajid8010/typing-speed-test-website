@@ -10,7 +10,7 @@ const lightTheme = {
     background: "#ffffff33",
     textColor: "#000000",
     typeBoxTextColor: "#999999",
-
+    modalBackground: "grey",
 
 }
 

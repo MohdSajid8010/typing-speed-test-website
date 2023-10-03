@@ -8,6 +8,7 @@ import { NavLink } from 'react-router-dom';
 
 const Footer = () => {
     const { theme, setTheme } = useThemeContext()
+    console.log("Footer")
 
     function handleChange(e) {
         // console.log(e, e.value)

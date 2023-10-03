@@ -3,15 +3,20 @@ import Graph from './Graph'
 import { auth, db } from '../FirebaseConfig';
 import { toast } from 'react-toastify';
 import { addDoc, collection } from 'firebase/firestore';
+import { useTestMode } from '../context/TestModeContext';
+import { Tooltip } from '@mui/material';
 
 const Stats = ({ wpm, accuracy, corretChar, inCorretChar, missedChar, extraChar, graphData }) => {
+
+    let { isDataAdd, setIsDataAdd } = useTestMode();
 
     console.log(wpm, accuracy, "corretChar", corretChar,
         "inCorretChar", inCorretChar,
         "missedChar", missedChar,
         "extraChar", extraChar,
         graphData
-    )
+    );
+
     let timeSet = new Set();
     let newGraphData = graphData.filter((arr) => {
         if (!timeSet.has(arr[0])) {//if value not contain then add
@@ -23,7 +28,7 @@ const Stats = ({ wpm, accuracy, corretChar, inCorretChar, missedChar, extraChar,
 
 
     function pushDataToDB() {
-        const { uid } = auth.currentUser;
+        const { uid, email } = auth.currentUser;
 
         addDoc(collection(db, "Results"), {
             wpm: wpm,
@@ -34,8 +39,10 @@ const Stats = ({ wpm, accuracy, corretChar, inCorretChar, missedChar, extraChar,
             missedChar: missedChar,
             extraChar: extraChar,
             userId: uid,
+            userEmail: email,
         }).then((res) => {
             console.log(res);
+            setIsDataAdd(!isDataAdd)
             console.log("Document written with ID: ", res.id);
             toast.success("user data saved succesfully!", {
                 position: "top-right",
@@ -115,8 +122,16 @@ const Stats = ({ wpm, accuracy, corretChar, inCorretChar, missedChar, extraChar,
                     <div className='sub-title'>{isNaN(accuracy) ? accuracy : accuracy + " %"}</div>
                 </div>
                 <div>
-                    <div className='title'>Characters:</div>
-                    <div className='sub-title'>{corretChar}/{inCorretChar}/{missedChar}/{extraChar} </div>
+                    <Tooltip title="Correct / Incorrect / Missed / Extra " arrow>
+                        <div className='title'>Characters:</div>
+
+                        <div className='sub-title'>
+                            {corretChar}/
+                            {inCorretChar}/
+                            {missedChar}/
+                            {extraChar}
+                        </div>
+                    </Tooltip>
                 </div>
             </div>
             <div className='right'>

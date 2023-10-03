@@ -7,7 +7,7 @@ const errorObject = {
     'auth/wrong-password': 'The password is invalid',
     'auth/unknown': 'Please try again later!',
     'auth/cancelled-popup-request': 'operation has been cancelled'
-
-
+    // '(auth/cancelled-popup-request)'
+    // '(auth/popup-blocked)'
 }
 export default errorObject;

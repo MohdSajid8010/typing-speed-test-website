@@ -52,6 +52,37 @@ const TypeBox = () => {
         resetFun()
     }, [testTime])
 
+    function generate_easy_word() {
+        let easy = generate(50)
+        setWordArr(easy)
+    }
+    function generate_medium_word() {
+        let medium = generate({
+            exactly: 50,
+            formatter: (word) => { return word[0].toUpperCase().concat(word.slice(1)) },
+        })
+        // console.log(medium);
+        setWordArr(medium)
+    }
+    function generate_hard_word() {
+        let str = "!@#$%^&*()_+|}{>?<.,:;1234567890"//special char string
+        let hard = generate({
+            exactly: 50,
+            minLength: 6, maxLength: 7,
+            formatter: (word) => {
+                word = word.split("");
+                word[Math.floor(Math.random() * word.length)] = str[Math.floor(Math.random() * str.length + 3)];
+                // console.log(word)
+                return word.join("");
+
+            },
+        })
+        setWordArr(hard)
+
+        // console.log(hard);
+
+    }
+
     function startTimer() {
         let timerid = setInterval(timer, 1000)
         setIntervalId(timerid);
@@ -61,7 +92,8 @@ const TypeBox = () => {
             setCountDown((latestCtDown) => {
                 setCorectChar((corretChar) => {
                     setGraphData((graphData) => {
-                        return [...graphData, [testTime - latestCtDown + 1,
+                        return [...graphData,
+                        [testTime - latestCtDown + 1,
                         (corretChar / 5) / ((testTime - latestCtDown + 1) / 60)]
                         ]
                     })
@@ -92,7 +124,7 @@ const TypeBox = () => {
         }
         if (testEnd) return;
 
-        let allCurrChar = wordSpanRef[currWordIndex].current.children;//Nodelist
+        let allCurrChar = wordSpanRef[currWordIndex].current.children;//Nodelist of characters
         if (e.keyCode === 32) {//logic for space
 
             let correcrCharinWord = wordSpanRef[currWordIndex].current.querySelectorAll(".correct");
@@ -100,6 +132,7 @@ const TypeBox = () => {
                 setCorectWord(corretWord + 1)
                 // console.log("corretWord", corretWord)
             }
+
             if (allCurrChar.length <= currCharIndex) {//==
                 // remove cursor from last place
                 allCurrChar[currCharIndex - 1].classList.remove("current-right")//remove only current-right class, right cursor
@@ -110,7 +143,8 @@ const TypeBox = () => {
                 setMissedChar(missedChar + (allCurrChar.length - currCharIndex))
 
             }
-            if (wordSpanRef[currWordIndex + 1]) {
+
+            if (wordSpanRef[currWordIndex + 1]) {//if next word is exist
 
                 wordSpanRef[currWordIndex + 1].current.children[0].className = "current"
                 setCurrWordIndex(currWordIndex + 1);
@@ -181,10 +215,7 @@ const TypeBox = () => {
             allCurrChar[currCharIndex].className += " current-right"
 
         } else {
-            // setTimeout(() => {
-            //     allCurrChar[currCharIndex + 1].className = "current"
 
-            // }, 100)
             //if not last indexing
             allCurrChar[currCharIndex + 1].className = "current"
         }
@@ -245,7 +276,7 @@ const TypeBox = () => {
     }
     return (
         <div className='middle'>
-            <UpperMenu countDown={countDown} resetFun={resetFun} />
+            <UpperMenu countDown={countDown} resetFun={resetFun} generate_easy_word={generate_easy_word} generate_medium_word={generate_medium_word} generate_hard_word={generate_hard_word} />
 
             {testEnd ? (<Stats wpm={calculateWPM()} accuracy={String(calculateAccuracy())}
                 corretChar={corretChar} inCorretChar={inCorretChar} missedChar={missedChar} extraChar={extraChar} graphData={graphData}

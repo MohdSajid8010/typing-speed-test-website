@@ -9,7 +9,7 @@ const UserInfo = ({ data }) => {
     function maxWPM_AVG() {
         let sum = 0;
         let maxWpm = 0;
-        data.map((obj) => {
+        data.forEach((obj) => {
             sum = sum + obj.wpm
             if (obj.wpm > maxWpm) {
                 maxWpm = obj.wpm;
@@ -18,6 +18,7 @@ const UserInfo = ({ data }) => {
         // console.log(sum)
         return { "wpm": maxWpm, "avg": Math.round((sum / data.length)) || 0 }
     }
+
     return (
         <div className='user-info'>
             <div className='user'>
@@ -27,7 +28,7 @@ const UserInfo = ({ data }) => {
 
                 <div className='info'>
                     <div className='email'>{user.email} </div>
-                    {console.log(new Date(user.metadata.creationTime).toDateString())}
+                    {/* {console.log(new Date(user.metadata.creationTime).toDateString())} */}
                     <div className='joined-at'>joined - {new Date(user.metadata.creationTime).toDateString()}</div>
                 </div>
             </div>

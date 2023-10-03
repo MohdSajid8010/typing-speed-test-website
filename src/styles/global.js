@@ -11,7 +11,9 @@ export const GlobalStyle = createGlobalStyle`
 
 
 }
-
+// ::-webkit-scrollbar {
+//     display: none;
+//   }
 body {
     background-color:${(props) => props.theme.background};
     color:${(props) => props.theme.textColor};
@@ -151,6 +153,8 @@ body {
     margin: auto;
     font-size: 1.4rem;
     margin-bottom: 10px;
+    height: 50px;
+    align-items: flex-end;
 }
 
 .modes {
@@ -289,8 +293,18 @@ body {
 .table {
     width: 100% !important;
     margin: auto;
-    border: 1px solid ${(props) => props.theme.textColor};
+    border: 2px solid ${(props) => props.theme.textColor};
+    border-radius:4px;
 }
+
+.table{
+    border: 0.5px solid ${(props) => props.theme.textColor}; 
+    margin-bottom:250px;
+}
+
+// .table::-webkit-scrollbar {
+//     display: none;
+//   }
 
 .tableCell {
     color:${(props) => props.theme.textColor};
@@ -299,9 +313,19 @@ body {
     border:1px solid ${(props) => props.theme.textColor};
 }
 
-.line-component {
-    width: 100% !important;
 
+
+.line-component,.bar-component {
+    width: 100% !important;
+    min-height: 500px;
+
+}
+.pie-chart{
+    min-height: 300px;
+    min-width: 300px;
+    width: 40% !important;
+    height: 40% !important;
+    margin: auto;
 }
 
 .parentOfloader {
@@ -321,6 +345,26 @@ body {
     border: none;
 }
 
+.topper_friend {
+
+    background-color: rgba(255, 99, 132, 0.5);
+    border-right: none;
+    border-radius: 10px;
+}
+
+.you {
+    background-color: rgba(53, 162, 235, 0.5);
+    border-radius: 10px;
+
+
+}
+.compare{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
 @media (max-width:1150px) {
     .stats-box .left {
         width: 30%;
@@ -334,11 +378,6 @@ body {
 @media (max-width:800px) {
     .canvas {
         width: 100vw;
-    }
-
-    .line-component {
-        font-size: 16px;
-
     }
 
 
@@ -411,7 +450,7 @@ body {
     .words {
         font-size: 23px;
     }
-    .line-component {
+    .line-component,.bar-component {
         // width: 100% !important;
         min-height: 300px;
     }
