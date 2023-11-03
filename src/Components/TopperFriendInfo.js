@@ -3,8 +3,8 @@ import React from 'react'
 
 const TopperFriendInfo = ({ curr_userObj, topper_ORfriendObj, vs }) => {
 
-    // console.log("curr_userObj", curr_userObj
-    //     , topper_ORfriendObj)
+    console.log("curr_userObj", curr_userObj
+        , topper_ORfriendObj)
 
     return (
         <div className='user-info user-info2'>
@@ -16,7 +16,7 @@ const TopperFriendInfo = ({ curr_userObj, topper_ORfriendObj, vs }) => {
                 <div className='info'>
                     <div className='email'>YOU</div>
                     <div className='email'>{curr_userObj.userEmail}</div>
-                    <div className='joined-at'>joined - 23 /dfs/4</div>
+                    {/* <div className='joined-at'>joined - {new Date(curr_userObj.metadata.creationTime).toDateString()}</div> */}
                 </div>
             </div>
 
@@ -28,7 +28,7 @@ const TopperFriendInfo = ({ curr_userObj, topper_ORfriendObj, vs }) => {
                 <div className='info'>
                     <div className='email'>{vs.toUpperCase()}</div>
                     <div className='email'>{topper_ORfriendObj.userEmail} </div>
-                    <div className='joined-at'>joined - 23 /dfs/4</div>
+                    {/* <div className='joined-at'>joined - 23 /dfs/4</div> */}
                 </div>
             </div>
         </div>
