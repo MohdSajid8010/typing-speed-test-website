@@ -61,7 +61,7 @@ const UserDataTable = ({ data }) => {
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((obj, i) => {
                                     return <TableRow hover role="checkbox" tabIndex={-1} key={i}>
-                                        <TableCell align={columns[0].align} className='tableCell'>{i + 1}</TableCell>
+                                        <TableCell align={columns[0].align} className='tableCell'>{(page * rowsPerPage) + (i + 1)}</TableCell>
                                         <TableCell align={columns[1].align} className='tableCell'>{obj.wpm}</TableCell>
                                         <TableCell align={columns[2].align} className='tableCell'>{obj.accuracy}</TableCell>
                                         <TableCell align={columns[3].align} className='tableCell'>
@@ -79,7 +79,7 @@ const UserDataTable = ({ data }) => {
                                     </TableRow>
                                 })}
                         </TableBody>
-                        
+
                     </Table>
                 </TableContainer>
                 <TablePagination

@@ -19,7 +19,7 @@ const LineGraphComp = ({ curr_user_data, data2, vs }) => {
             <Line className="line-component" data={
                 {
                     // toLocaleString
-                    labels: ["1st", "2nd", "3rd", "4th", "5th","6th","7th","8th","9th","10th"],
+                    labels: ["1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th", "10th"],
                     // labels: curr_user_data.map((obj) => obj.timeStamp.,"8thtoDate().toLocaleString().split(',')).reverse(),
 
 

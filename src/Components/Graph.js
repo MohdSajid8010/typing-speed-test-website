@@ -5,7 +5,7 @@ import { useThemeContext } from '../context/ThemeContext'
 
 
 const Graph = ({ newGraphData, vsDateOrTime }) => {
-    // console.log(newGraphData)
+    console.log(newGraphData)
     let { theme } = useThemeContext()
 
     return (
@@ -15,7 +15,7 @@ const Graph = ({ newGraphData, vsDateOrTime }) => {
                     labels: vsDateOrTime === 'Time(sec)' ? newGraphData.map((arr) => arr[0]) : newGraphData.map((arr) => arr[0]).reverse(),//time/date
                     datasets: [
                         {
-                            data: newGraphData.map((arr) => arr[1]).reverse(),//wpm
+                            data: newGraphData.map((arr) => arr[1]),//wpm
                             label: `Word Per Minute vs ${vsDateOrTime}`,
                             borderColor: `${theme.typeBoxTextColor}`,
 

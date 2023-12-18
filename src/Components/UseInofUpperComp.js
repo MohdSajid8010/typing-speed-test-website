@@ -47,16 +47,17 @@ const UseInofUpperComp = () => {
     }
 
     return (
-        <> <div className='user-info compare' onClick={handleOpen}>
-            <h1>Compare With Your Friend OR Topper</h1>
+        <>
             <Tooltip title="Clicked here to Compare With Your Friend OR Topper"
                 placement="bottom" arrow
             >
+                <div className='user-info compare' onClick={handleOpen}>
+                    <h1>Compare With Your Friend OR Topper</h1>
 
-                <Balance style={{ fontSize: "100px" }} />
+                    <Balance style={{ fontSize: "100px" }} />
+                    {/* <Leaderboard onClick={() => navigate("/topper")} /> */}
+                </div>
             </Tooltip>
-            {/* <Leaderboard onClick={() => navigate("/topper")} /> */}
-        </div>
 
             <Modal
                 open={open}
